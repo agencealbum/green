@@ -20,26 +20,37 @@
 
         <div v-if="result" class="container text-dark">
 
-            <div class="mt-5 results row text-center">
+            <div class="my-5 alert alert-info">
+              Score total : {{ total }} %
+            </div>
 
-              <div class="card-deck">
+            <div class="results row text-center d-flex">
+
+              <div class="card-deck justify-content-center align-self-center">
 
                 <div class="col card">
-                  <p>Hébergement vert</p>
-                  <span v-if="result.hosting.green">OUI</span>
-                  <span v-else>NON</span>
+                  <h4>Hébergement vert</h4>
+                  <span v-if="result.hosting.green">75%</span>
+                  <span v-else>25%</span>
                 </div>
 
                 <div v-if="result.hosting.hostedby" class="col card rabbit-bg">
-
+                  <h4>Performance</h4>
+                  {{ result.pagespeed.original.speedScore }} %
                 </div>
 
                 <div class="col card">
-                  <strong>{{ result.carbon.c }}g</strong> de CO2 à chaque visite.
+                  <h4>Émission</h4>
+                  <p><strong>{{ result.carbon.c }}g</strong><br> de CO2 par visite</p>
                 </div>
 
-                <div class="col card rabbit-bg">
+                <div class="col card">
+                  <h4>Adaptabilité</h4>
+                  {{ result.pagespeed.original.usabilityScore }} %
+                </div>
 
+                <div class="col card">
+                  <img class="img-fluid" :src="'data:image/jpeg;base64,'+result.pagespeed.original.thumbnail">
                 </div>
 
               </div>
@@ -61,7 +72,8 @@
             return {
                 result: null,
                 url: 'https://www.google.com',
-                loading: false
+                loading: false,
+                total : 0,
             }
         },
 
@@ -78,9 +90,20 @@
                 axios.get('/scan?url=' + this.url).then(response => {
                     this.result = response.data;
                     this.loading = false;
+                    this.calculate();
                 });
-            }
-        } 
+            },
+
+            calculate() {
+
+              var carbon = (this.result.carbon.c > 1) ? 0 : (100 - (this.result.carbon.c * 100));
+              var host = (this.result.hosting.green) ? 75 : 25;
+              var sum = this.result.pagespeed.original.speedScore + this.result.pagespeed.original.usabilityScore + carbon + host;
+
+              this.total = Math.round(sum / 4);
+
+            },
+        }
     }
 
 </script>

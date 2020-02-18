@@ -10,14 +10,6 @@ class GreenController extends Controller
 
 	private $pagespeed;
 
-	public function __construct() 
-	{
-		$this->pagespeed = [
-			'endpoint' => 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed',
-			'key' => 'AIzaSyBzFBFiMK5sx-MhSNDChDRtn_Ob-K1DGus'
-		];
-	}
-
 	public function index()
 	{
 		return view('welcome');
@@ -48,21 +40,16 @@ class GreenController extends Controller
 	public function pagespeed($url)
 	{
 
-		$client = new Client();
+		$key = env("GOOGLE_PAGESPEED_APP_KEY");
+		$caller = new \PhpInsights\InsightsCaller($key, 'fr');
+		$response = $caller->getResponse($url, \PhpInsights\InsightsCaller::STRATEGY_MOBILE);
+		$result = $response->getMappedResult();
 
-		$response = $client->request('GET', $this->pagespeed['endpoint'], ['query' => [
-		    'key' => $this->pagespeed['key'], 
-		    'url' => $url,
-		    'locale' => 'fr',
-		    //'category' => 'ACCESSIBILITY',
-		    //'category' => 'BEST_PRACTICES',
-		    'category' => 'PERFORMANCE',
-		    //'category' => 'PWA',
-		    //'category' => 'SEO'
-		]]);
-
-		$statusCode = $response->getStatusCode();
-		return json_decode($response->getBody(), true);
+		return response()->json([
+			'speedScore' => $result->getSpeedScore(),
+			'usabilityScore' => $result->getUsabilityScore(),
+			'thumbnail' => $result->screenshot->getData()
+		]);
 
 	}
 

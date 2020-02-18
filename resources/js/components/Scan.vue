@@ -21,35 +21,35 @@
         <div v-if="result" class="container text-dark">
 
             <div class="my-5 alert alert-info">
-              Score total : {{ total }} %
+              <h1>Score total : {{ total }} %</h1>
             </div>
 
-            <div class="results row text-center d-flex">
+            <div class="results row text-center">
 
-              <div class="card-deck justify-content-center align-self-center">
+              <div class="card-deck d-flex">
 
-                <div class="col card">
+                <div class="col card h-100 justify-content-center align-self-center">
                   <h4>Hébergement vert</h4>
                   <span v-if="result.hosting.green">75%</span>
                   <span v-else>25%</span>
                 </div>
 
-                <div v-if="result.hosting.hostedby" class="col card rabbit-bg">
+                <div v-if="result.hosting.hostedby" class="col card h-100 justify-content-center align-self-center">
                   <h4>Performance</h4>
                   {{ result.pagespeed.original.speedScore }} %
                 </div>
 
-                <div class="col card">
+                <div class="col card h-100 justify-content-center align-self-center">
                   <h4>Émission</h4>
                   <p><strong>{{ result.carbon.c }}g</strong><br> de CO2 par visite</p>
                 </div>
 
-                <div class="col card">
+                <div class="col card h-100 justify-content-center align-self-center">
                   <h4>Adaptabilité</h4>
                   {{ result.pagespeed.original.usabilityScore }} %
                 </div>
 
-                <div class="col card">
+                <div class="col card h-100 justify-content-center align-self-center">
                   <img class="img-fluid" :src="'data:image/jpeg;base64,'+result.pagespeed.original.thumbnail">
                 </div>
 

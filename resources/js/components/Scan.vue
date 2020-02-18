@@ -1,9 +1,6 @@
 <template>
 
-   <div 
-    class="d-flex align-items-center flex-column justify-content-center w-100 h-100 text-white"
-    style="background-color: #1abc9c;" 
-   >
+   <div class="d-flex align-items-center flex-column justify-content-center w-100 h-100 text-white">
 
         <div v-show="loading" class="spinner">
           <div class="double-bounce1"></div>
@@ -21,23 +18,32 @@
             </div>
         </form>
 
-        <div v-if="result" class="container">
+        <div v-if="result" class="container text-dark">
 
             <div class="mt-5 results row text-center">
-                <div class="col">
-                    <p>Hébergement vert</p>
-                    <span v-if="result.hosting.green">OUI</span>
-                    <span v-else>NON</span>
+
+              <div class="card-deck">
+
+                <div class="col card">
+                  <p>Hébergement vert</p>
+                  <span v-if="result.hosting.green">OUI</span>
+                  <span v-else>NON</span>
                 </div>
-                <div v-if="result.hosting.hostedby" class="col">
-                    Hébergé par {{ result.hosting.hostedby }}
+
+                <div v-if="result.hosting.hostedby" class="col card rabbit-bg">
+
                 </div>
-                <div class="col">
-                    <strong>{{ result.carbon.c }}g</strong> de CO2 à chaque visite.
+
+                <div class="col card">
+                  <strong>{{ result.carbon.c }}g</strong> de CO2 à chaque visite.
                 </div>
-                <div class="col">
-                    Plus propre que <strong>{{ result.carbon.p }}%</strong> des sites testés.
+
+                <div class="col card rabbit-bg">
+
                 </div>
+
+              </div>
+
             </div>
 
         </div>
@@ -54,7 +60,7 @@
         data: function () {
             return {
                 result: null,
-                url: null,
+                url: 'https://www.google.com',
                 loading: false
             }
         },

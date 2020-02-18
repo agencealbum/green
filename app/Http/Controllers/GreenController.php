@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 class GreenController extends Controller
 {
 
+	private $pagespeed;
+
+	public function __construct() 
+	{
+		$this->pagespeed = [
+			'endpoint' => 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed',
+			'key' => 'AIzaSyBzFBFiMK5sx-MhSNDChDRtn_Ob-K1DGus'
+		];
+	}
+
 	public function index()
 	{
 		return view('welcome');
@@ -21,6 +31,7 @@ class GreenController extends Controller
 		return response()->json([
 			'hosting' => $this->hosting($this->remove_http($url)),
 			'carbon' => $this->carbon($url),
+			'pagespeed' => $this->pagespeed($url),
 		]);
 	}
 
@@ -32,6 +43,27 @@ class GreenController extends Controller
 	      }
 	   }
 	   return $url;
+	}
+
+	public function pagespeed($url)
+	{
+
+		$client = new Client();
+
+		$response = $client->request('GET', $this->pagespeed['endpoint'], ['query' => [
+		    'key' => $this->pagespeed['key'], 
+		    'url' => $url,
+		    'locale' => 'fr',
+		    //'category' => 'ACCESSIBILITY',
+		    //'category' => 'BEST_PRACTICES',
+		    'category' => 'PERFORMANCE',
+		    //'category' => 'PWA',
+		    //'category' => 'SEO'
+		]]);
+
+		$statusCode = $response->getStatusCode();
+		return json_decode($response->getBody(), true);
+
 	}
 
     public function hosting($url)

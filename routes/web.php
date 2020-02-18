@@ -11,5 +11,15 @@
 |
 */
 
+Auth::routes();
+
+
 Route::get('/', 'GreenController@index');
 Route::get('/scan', 'GreenController@scan');
+
+Route::get('/conseils', function() {
+	return view('conseils');
+});
+
+
+Route::get('/home', 'HomeController@index')->name('home');

@@ -79,11 +79,14 @@
 
                 <div class="col card h-100 justify-content-center align-self-center">
                   <h4>Hébergement vert</h4>
-                  <span v-if="result.hosting.green">75%</span>
-                  <span v-else>25%</span>
+                  <span v-if="result.hosting.green">OUI</span>
+                  <template v-else>
+                    <span v-if="result.hosting.hostedby">NON</span>
+                    <span v-else>INCONNU</span>
+                  </template>
                 </div>
 
-                <div v-if="result.hosting.hostedby" class="col card h-100 justify-content-center align-self-center">
+                <div class="col card h-100 justify-content-center align-self-center">
                   <h4>Performance</h4>
                   {{ result.pagespeed.original.speedScore }} %
                 </div>

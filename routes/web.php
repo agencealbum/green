@@ -17,6 +17,9 @@ Auth::routes();
 Route::get('/', 'GreenController@index');
 Route::get('/scan', 'GreenController@scan');
 
+Route::get('/progress', 'GreenController@getProgess');
+
+
 Route::get('/conseils', function() {
 	return view('conseils');
 });

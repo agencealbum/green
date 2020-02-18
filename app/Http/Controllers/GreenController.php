@@ -2,17 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 
 class GreenController extends Controller
 {
 
-	private $pagespeed;
-
 	public function index()
 	{
 		return view('welcome');
+	}
+
+	public function getProgess()
+	{
+
+		$progress = Session::get('progress') * 100 / 5;
+	    return response()->json($progress);
 	}
 
 	public function scan(Request $request)
@@ -20,10 +26,21 @@ class GreenController extends Controller
 		
 		$url = $request->url;
 
+		Session::put('progress', 0);
+		Session::save();
+
+		if( $hosting = $this->hosting($this->remove_http($url)) ) {
+			Session::put('progress', Session::get('progress') + 1);
+			Session::save();
+		}
+
 		return response()->json([
-			'hosting' => $this->hosting($this->remove_http($url)),
+			'hosting' => $hosting,
 			'carbon' => $this->carbon($url),
 			'pagespeed' => $this->pagespeed($url),
+			'tags' => $this->tags($url),
+			'headers' => $this->headers($url),
+			'title' => $this->title($url),
 		]);
 	}
 
@@ -64,6 +81,7 @@ class GreenController extends Controller
 		// url will be: http://my.domain.com/test.php?key1=5&key2=ABC;
 
 		$statusCode = $response->getStatusCode();
+
 		return json_decode($response->getBody()->getContents());
 
     }
@@ -81,7 +99,51 @@ class GreenController extends Controller
 		// url will be: http://my.domain.com/test.php?key1=5&key2=ABC;
 
 		$statusCode = $response->getStatusCode();
+
+		Session::put('progress', Session::get('progress') + 1);
+		Session::save();
+
 		return json_decode($response->getBody(), true);
 
     }
+
+    public function tags($url)
+    {
+
+    	$tags = get_meta_tags($url);
+
+		Session::put('progress', Session::get('progress') + 1);
+		Session::save();
+
+
+    	return $tags;
+
+    }
+
+    public function headers($url)
+    {
+
+    	$headers = get_headers($url);
+
+		Session::put('progress', Session::get('progress') + 1);
+		Session::save();
+
+
+    	return $headers;
+
+    }
+
+    public function title($url)
+    {
+
+		$data = file_get_contents($url);
+    	$title = preg_match('/<title[^>]*>(.*?)<\/title>/ims', $data, $matches) ? $matches[1] : null;
+
+		Session::put('progress', Session::get('progress') + 1);
+		Session::save();
+
+    	return $title;
+
+    }
+
 }

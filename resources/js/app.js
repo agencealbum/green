@@ -5,8 +5,16 @@
  */
 
 require('./bootstrap');
+require('./custom');
 
 window.Vue = require('vue');
+
+
+import App from './components/App.vue';
+import VueRouter from 'vue-router';
+import {routes} from './routes';
+
+Vue.use(VueRouter);
 
 /**
  * The following block of code may be used to automatically register your
@@ -27,6 +35,13 @@ files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+const router = new VueRouter({
+    mode: 'history',
+    routes: routes
+});
+
 const app = new Vue({
     el: '#app',
+    router: router,
+    render: h => h(App),
 });

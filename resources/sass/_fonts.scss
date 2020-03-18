@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+@font-face {
+    font-family: 'Akkurat';
+    src: url('/fonts/akkurat-light.woff2') format('woff2'),
+        url('/fonts/akkurat-light.woff') format('woff');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Akkurat';
+    src: url('/fonts/akkurat-regular.woff2') format('woff2'),
+         url('/fonts/akkurat-regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'Akkurat';
+    src: url('/fonts/akkurat-bold.woff2') format('woff2'),
+         url('/fonts/akkurat-bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+
+}

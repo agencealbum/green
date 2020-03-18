@@ -11,12 +11,18 @@
 |
 */
 
+Route::get('/progress', 'GreenController@getProgess');
+
+Route::get('{any}', function () {
+    return view('app');
+})->where('any', '.*');
+
+/*
 Auth::routes();
 
 
 Route::get('/', 'GreenController@index');
 Route::get('/scan', 'GreenController@scan');
-
 Route::get('/progress', 'GreenController@getProgess');
 
 
@@ -26,3 +32,4 @@ Route::get('/conseils', function() {
 
 
 Route::get('/home', 'HomeController@index')->name('home');
+*/

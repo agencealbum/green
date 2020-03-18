@@ -14,6 +14,11 @@ class GreenController extends Controller
 		return view('welcome');
 	}
 
+	public function store(Request $request) 
+	{
+		
+	}
+
 	public function getProgess()
 	{
 
@@ -41,6 +46,7 @@ class GreenController extends Controller
 			'tags' => $this->tags($url),
 			'headers' => $this->headers($url),
 			'title' => $this->title($url),
+			'url' => $url,
 		]);
 	}
 
@@ -64,8 +70,7 @@ class GreenController extends Controller
 
 		return response()->json([
 			'speedScore' => $result->getSpeedScore(),
-			'usabilityScore' => $result->getUsabilityScore(),
-			'thumbnail' => $result->screenshot->getData()
+			'usabilityScore' => $result->getUsabilityScore()
 		]);
 
 	}

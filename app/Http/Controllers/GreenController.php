@@ -22,7 +22,7 @@ class GreenController extends Controller
 	public function getProgess()
 	{
 
-		$progress = Session::get('progress') * 100 / 5;
+		$progress = Session::get('progress') * 100 / 6;
 	    return response()->json($progress);
 	}
 
@@ -39,10 +39,25 @@ class GreenController extends Controller
 			Session::save();
 		}
 
+		if( $pagespeed = $this->pagespeed($url) ) {
+
+			$performance = $pagespeed->getSpeedScore();
+			$usability = $pagespeed->getUsabilityScore();
+
+			Session::put('progress', Session::get('progress') + 1);
+			Session::save();
+		}
+
+		if( $carbon = $this->carbon($url) ) {
+			Session::put('progress', Session::get('progress') + 1);
+			Session::save();
+		}
+
 		return response()->json([
 			'hosting' => $hosting,
-			'carbon' => $this->carbon($url),
-			'pagespeed' => $this->pagespeed($url),
+			'performance' => $performance,
+			'usability' => $usability,
+			'carbon' => $carbon,
 			'tags' => $this->tags($url),
 			'headers' => $this->headers($url),
 			'title' => $this->title($url),
@@ -67,11 +82,7 @@ class GreenController extends Controller
 		$caller = new \PhpInsights\InsightsCaller($key, 'fr');
 		$response = $caller->getResponse($url, \PhpInsights\InsightsCaller::STRATEGY_MOBILE);
 		$result = $response->getMappedResult();
-
-		return response()->json([
-			'speedScore' => $result->getSpeedScore(),
-			'usabilityScore' => $result->getUsabilityScore()
-		]);
+		return $result;
 
 	}
 
@@ -87,7 +98,10 @@ class GreenController extends Controller
 
 		$statusCode = $response->getStatusCode();
 
-		return json_decode($response->getBody()->getContents());
+		$hosting = json_decode($response->getBody()->getContents());
+		$hosting = ($hosting->green) ? 100 : 25;
+
+		return $hosting;
 
     }
 
@@ -101,14 +115,11 @@ class GreenController extends Controller
 		    'url' => $url, 
 		]]);
 
-		// url will be: http://my.domain.com/test.php?key1=5&key2=ABC;
-
 		$statusCode = $response->getStatusCode();
+		$carbon = json_decode($response->getBody(), true); // Carbon (gramme)
+		$carbon = intval(round( ($carbon['c'] > 1) ? 0 : (100 - ($carbon['c'] * 100)), 0 )); // Convert to percent
 
-		Session::put('progress', Session::get('progress') + 1);
-		Session::save();
-
-		return json_decode($response->getBody(), true);
+		return $carbon;
 
     }
 

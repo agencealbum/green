@@ -57,35 +57,48 @@
         </section>
 
 
-        <div v-if="result" class="container text-dark">
+        <div v-if="result" class="container text-center">
 
-            <div class="results row text-center">
+            <div class="results row mb-5">
 
-              <div class="col card h-100 justify-content-center align-self-center">
-                <h4>Hébergement vert</h4>
-                <span v-if="result.hosting.green">OUI</span>
-                <template v-else>
-                  <span v-if="result.hosting.hostedby">NON</span>
-                  <span v-else>INCONNU</span>
-                </template>
+              <div class="col h-100 result result-1 justify-content-center align-self-center">
+                <img src="/img/results/hosting-0.svg">
+                <h4>Hébergement</h4>
+                <animated-number :formatValue="formatNumber" :value="result.hosting"></animated-number> %
               </div>
 
-              <div class="col card h-100 justify-content-center align-self-center">
-                <h4>Performance</h4>
-                {{ result.pagespeed.original.speedScore }} %
+              <div class="col h-100 result result-2 justify-content-center align-self-center">
+                <img src="/img/results/performances-0.svg">
+                <h4>Performances</h4>
+                <animated-number :formatValue="formatNumber" :value="result.performance"></animated-number> %
               </div>
 
-              <div class="col card h-100 justify-content-center align-self-center">
-                <h4>Émission</h4>
-                <p><strong>{{ result.carbon.c }}g</strong><br> de CO2 par visite</p>
-              </div>
-
-              <div class="col card h-100 justify-content-center align-self-center">
+              <div class="col h-100 result result-3 justify-content-center align-self-center">
+                <img src="/img/results/adaptability-0.svg">
                 <h4>Adaptabilité</h4>
-                {{ result.pagespeed.original.usabilityScore }} %
+                <animated-number :formatValue="formatNumber" :value="result.usability"></animated-number> %
+              </div>
+
+              <div class="col h-100 result result-4 justify-content-center align-self-center">
+                <img src="/img/results/carbon-0.svg">
+                <h4>Bilan carbone</h4>
+                <animated-number :formatValue="formatNumber" :value="result.carbon"></animated-number> %
               </div>
 
             </div>
+
+            <div class="row">
+
+              <div class="col-md-12">
+
+                <p>Pour améliorer votre score</p>
+
+                <router-link to="/contact" class="btn btn-lg btn-submit">Contactez nous</router-link>
+
+              </div>
+
+            </div>
+
 
           </div>
 
@@ -97,9 +110,15 @@
 
 <script>
 
+    import AnimatedNumber from "animated-number-vue";
+
     export default {
 
         name: 'scan',
+
+        components: {
+          AnimatedNumber
+        },
 
         data: function () {
             return {
@@ -121,6 +140,10 @@
 
         methods: {
 
+            formatNumber(value) {
+              return `${value.toFixed()}`;
+            },
+
             scan(e) {
 
                 e.preventDefault();
@@ -138,10 +161,7 @@
 
             calculate() {
 
-              var carbon = (this.result.carbon.c > 1) ? 0 : (100 - (this.result.carbon.c * 100));
-              var host = (this.result.hosting.green) ? 100 : 25;
-              var sum = this.result.pagespeed.original.speedScore + this.result.pagespeed.original.usabilityScore + carbon + host;
-
+              var sum = this.result.performance + this.result.usability + this.result.carbon + this.result.hosting;
               this.total = Math.round(sum / 4);
 
             },

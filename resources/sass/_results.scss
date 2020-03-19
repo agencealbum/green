@@ -1,0 +1,66 @@
+.results {
+  font-size: 2rem;
+}
+
+.result {
+	animation: bounce 2s ease infinite;
+	transition: all .6s ease;
+	cursor: pointer;
+}
+
+.results:hover .result:not(:hover) {
+	filter: blur(2px);
+}
+
+.result-1 {
+	animation-delay: 0s;
+}
+.result-2 {
+	animation-delay: 0.25s;
+}
+.result-3 {
+	animation-delay: 0.75s;
+}
+.result-4 {
+	animation-delay: 1s;
+}
+
+
+.bubble {
+	position: relative;
+	border: 2px solid #4E483C;
+	border-radius: 8px;
+	padding: 1rem;
+	color: $text;
+	font-weight: bold;
+	text-align: center;
+}
+.bubble:after, .bubble:before {
+	right: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+}
+
+.bubble:after {
+	border-color: rgba(170, 213, 197, 0);
+	border-right-color: #BBA980;
+	border-width: 20px;
+	margin-top: -47px;
+}
+.bubble:before {
+	border-color: rgba(78, 72, 60, 0);
+	border-right-color: #4E483C;
+	border-width: 23px;
+	margin-top: -50px;
+}
+
+@keyframes bounce{
+	from {transform: scale(1);}
+	50%  {transform: scale(1.02);}
+	to   {transform: scale(1);}
+}

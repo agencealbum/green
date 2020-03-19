@@ -9,16 +9,21 @@
 
 			<div v-if="result" class="container mt-5">
 
-				<div class="row d-flex align-items-end h-100">
+				<div class="row d-flex align-items-center h-100">
 
 					<div class="col-md-6">
-						<small>{{ result.url }}</small>
+						<a :href="result.url" target="_blank">{{ result.url }}</a>
 						<h2>{{ result.title }}</h2>
 						<p>{{ result.tags.description }}</p>
 					</div>
 
-					<div class="col-md-6">
-						Score total : {{ total }} %
+					<div class="col-md-3">
+						<donut :total="total"></donut>
+					</div>
+					<div class="col-md-3">
+						<div class="bubble">
+							<p>Bravo,<br>quelques améliorations permettraient à votre site d’être au top !</p>
+						</div>
 					</div>
 
 				</div>

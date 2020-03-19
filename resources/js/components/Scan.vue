@@ -91,8 +91,6 @@
 
         </template>
 
-        <more></more>
-
     </div>
 
 </template>

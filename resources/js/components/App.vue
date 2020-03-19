@@ -5,7 +5,9 @@
         <!-- NAVBAR -->
         <navbar></navbar>
 
-        <router-view></router-view>
+        <transition name="fade" mode="out-in">
+            <router-view></router-view>
+        </transition>
 
         <div class="container footer">
 
@@ -29,3 +31,18 @@
 
     }
 </script>
+
+
+<style>
+
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity .3s;
+    }
+
+    .fade-enter,
+    .fade-leave-to {
+        opacity: 0;
+    }
+
+</style>

@@ -2,9 +2,9 @@
 
    <div>
 
-      <loading v-if="loading" :progress="progress"></loading>
-
       <scan-header :result="result" :total="total"></scan-header>
+
+      <loading v-if="loading" :progress="progress"></loading>
 
       <template v-if="!loading">
 
@@ -56,53 +56,11 @@
 
         </section>
 
+        <transition name="fade" mode="out-in">
+          <result v-if="result" :result="result"></result>
+        </transition>
 
-        <div v-if="result" class="container text-center">
-
-            <div class="results row mb-5">
-
-              <div class="col h-100 result result-1 justify-content-center align-self-center">
-                <img src="/img/results/hosting-0.svg">
-                <h4>Hébergement</h4>
-                <animated-number :formatValue="formatNumber" :value="result.hosting"></animated-number> %
-              </div>
-
-              <div class="col h-100 result result-2 justify-content-center align-self-center">
-                <img src="/img/results/performances-0.svg">
-                <h4>Performances</h4>
-                <animated-number :formatValue="formatNumber" :value="result.performance"></animated-number> %
-              </div>
-
-              <div class="col h-100 result result-3 justify-content-center align-self-center">
-                <img src="/img/results/adaptability-0.svg">
-                <h4>Adaptabilité</h4>
-                <animated-number :formatValue="formatNumber" :value="result.usability"></animated-number> %
-              </div>
-
-              <div class="col h-100 result result-4 justify-content-center align-self-center">
-                <img src="/img/results/carbon-0.svg">
-                <h4>Bilan carbone</h4>
-                <animated-number :formatValue="formatNumber" :value="result.carbon"></animated-number> %
-              </div>
-
-            </div>
-
-            <div class="row">
-
-              <div class="col-md-12">
-
-                <p>Pour améliorer votre score</p>
-
-                <router-link to="/contact" class="btn btn-lg btn-submit">Contactez nous</router-link>
-
-              </div>
-
-            </div>
-
-
-          </div>
-
-        </template>
+      </template>
 
     </div>
 
@@ -110,15 +68,9 @@
 
 <script>
 
-    import AnimatedNumber from "animated-number-vue";
-
     export default {
 
         name: 'scan',
-
-        components: {
-          AnimatedNumber
-        },
 
         data: function () {
             return {
@@ -134,15 +86,7 @@
             }
         },
 
-        mounted() {
-
-        },
-
         methods: {
-
-            formatNumber(value) {
-              return `${value.toFixed()}`;
-            },
 
             scan(e) {
 
@@ -151,7 +95,7 @@
                 this.loading = true;
                 this.getProgress();
 
-                axios.post('/api/scan', {url:this.url, email:this.email}).then(response => {
+                axios.post('/scan', {url:this.url, email:this.email}).then(response => {
                     this.clearProgress();
                     this.result = response.data;
                     this.loading = false;

@@ -11,6 +11,7 @@
 |
 */
 
+Route::post('/scan', 'GreenController@scan');
 Route::get('/progress', 'GreenController@getProgess');
 
 Route::get('{any}', function () {

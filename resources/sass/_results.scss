@@ -8,10 +8,6 @@
 	cursor: pointer;
 }
 
-.results:hover .result:not(:hover) {
-	filter: blur(2px);
-}
-
 .result-1 {
 	animation-delay: 0s;
 }

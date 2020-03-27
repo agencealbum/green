@@ -3,67 +3,116 @@
 namespace App\Http\Controllers;
 
 use Session;
+use App\Scan;
 use GuzzleHttp\Client;
+use Goutte\Client as Goutte;
 use Illuminate\Http\Request;
 
 class GreenController extends Controller
 {
+
+	protected $url;
+
 
 	public function index()
 	{
 		return view('welcome');
 	}
 
-	public function store(Request $request) 
+
+	// Check if the requested url exists
+	public function url_exists(Request $request)
 	{
-		
+		$file_headers = @get_headers($request->url);
+		$exists = (!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') ? false : true;
+	    return response()->json($exists);
 	}
 
+	// Increment the current progress session
+	public function incrementProgess()
+	{
+		Session::put('progress', Session::get('progress') + 1);
+		Session::save();
+	}
+
+	// Return the progress session status
 	public function getProgess()
 	{
-
-		$progress = Session::get('progress') * 100 / 6;
+		$progress = Session::get('progress') * 100 / 3.4;
 	    return response()->json($progress);
 	}
 
+	// Launch the url scan
 	public function scan(Request $request)
 	{
 		
-		$url = $request->url;
+		$this->url = $request->url;
 
 		Session::put('progress', 0);
 		Session::save();
 
-		if( $hosting = $this->hosting($this->remove_http($url)) ) {
-			Session::put('progress', Session::get('progress') + 1);
-			Session::save();
+		if( $hosting = $this->hosting() ) {
+
+			$this->incrementProgess();
+
+			if( $pagespeed = $this->pagespeed() ) {
+
+				$this->incrementProgess();
+
+				$performance = $pagespeed->getSpeedScore();
+				$usability = $pagespeed->getUsabilityScore();
+				
+
+				if( $carbon = $this->carbon() ) {
+
+					$this->incrementProgess();
+
+					if( $infos = $this->infos() ) {
+						$infos['url'] = $this->url;
+						$infos['email'] = $request->email;
+						$infos['ip'] = $request->ip();
+						$this->incrementProgess();
+					}
+
+				}
+
+			}
+
 		}
 
-		if( $pagespeed = $this->pagespeed($url) ) {
+		$total = round( ($hosting + $performance + $usability + $carbon) / 4);
 
-			$performance = $pagespeed->getSpeedScore();
-			$usability = $pagespeed->getUsabilityScore();
-
-			Session::put('progress', Session::get('progress') + 1);
-			Session::save();
-		}
-
-		if( $carbon = $this->carbon($url) ) {
-			Session::put('progress', Session::get('progress') + 1);
-			Session::save();
-		}
-
-		return response()->json([
+		$result = [
 			'hosting' => $hosting,
 			'performance' => $performance,
 			'usability' => $usability,
 			'carbon' => $carbon,
-			'tags' => $this->tags($url),
-			'headers' => $this->headers($url),
-			'title' => $this->title($url),
-			'url' => $url,
-		]);
+			'infos' => $infos,
+			'total' => $total,
+		];
+
+		if ($result) $this->store($result);
+
+		return response()->json($result);
+
 	}
+
+	public function store($result)
+	{
+        $scan = new Scan;
+
+        $scan->ip = $result['infos']['ip'];
+        $scan->email = $result['infos']['email'];
+        $scan->url = $result['infos']['url'];
+        $scan->hosting_score = $result['hosting'];
+        $scan->performance_score = $result['performance'];
+        $scan->responsive_score = $result['usability'];
+        $scan->carbon_score = $result['carbon'];
+        $scan->total_score = $result['total'];
+
+        $scan->save();
+	}
+
 
 	public function remove_http($url) {
 	   $disallowed = array('http://', 'https://');
@@ -75,19 +124,21 @@ class GreenController extends Controller
 	   return $url;
 	}
 
-	public function pagespeed($url)
+	public function pagespeed()
 	{
 
 		$key = env("GOOGLE_PAGESPEED_APP_KEY");
 		$caller = new \PhpInsights\InsightsCaller($key, 'fr');
-		$response = $caller->getResponse($url, \PhpInsights\InsightsCaller::STRATEGY_MOBILE);
+		$response = $caller->getResponse($this->url, \PhpInsights\InsightsCaller::STRATEGY_MOBILE);
 		$result = $response->getMappedResult();
 		return $result;
 
 	}
 
-    public function hosting($url)
+    public function hosting()
     {
+
+    	$url = $this->remove_http($this->url);
 
 		$endpoint = "https://api.thegreenwebfoundation.org/greencheck/" . $url;
 		$client = new Client();
@@ -105,14 +156,14 @@ class GreenController extends Controller
 
     }
 
-    public function carbon($url)
+    public function carbon()
     {
 
 		$endpoint = "https://api.websitecarbon.com/b";
 		$client = new Client();
 
 		$response = $client->request('GET', $endpoint, ['query' => [
-		    'url' => $url, 
+		    'url' => $this->url, 
 		]]);
 
 		$statusCode = $response->getStatusCode();
@@ -123,42 +174,19 @@ class GreenController extends Controller
 
     }
 
-    public function tags($url)
-    {
+    public function infos() {
 
-    	$tags = get_meta_tags($url);
+		$client = new Goutte();
 
-		Session::put('progress', Session::get('progress') + 1);
-		Session::save();
+		$crawler = $client->request('GET', $this->url);
 
+		$title = $crawler->filter('title')->text();
+		$description = $crawler->filterXpath('//meta[@name="description"]')->eq(0)->attr('content');
 
-    	return $tags;
-
-    }
-
-    public function headers($url)
-    {
-
-    	$headers = get_headers($url);
-
-		Session::put('progress', Session::get('progress') + 1);
-		Session::save();
-
-
-    	return $headers;
-
-    }
-
-    public function title($url)
-    {
-
-		$data = file_get_contents($url);
-    	$title = preg_match('/<title[^>]*>(.*?)<\/title>/ims', $data, $matches) ? $matches[1] : null;
-
-		Session::put('progress', Session::get('progress') + 1);
-		Session::save();
-
-    	return $title;
+		return array(
+			'title' => $title,
+			'description' => $description
+		);
 
     }
 

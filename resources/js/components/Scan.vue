@@ -14,9 +14,9 @@
 
             <div class="row">
 
-              <div class="col-md-12">
+              <div class="col-md-12 text-center">
 
-                <form @submit="scan">
+                <form @submit="checkUrl">
 
                   <div class="row mb-5">
 
@@ -30,7 +30,10 @@
                     <div class="col-md-6">
 
                       <label class="sr-only" for="inlineFormInputName2"></label>
-                      <input type="url" class="form-control form-control-lg mb-2 mr-sm-2" v-model="url" required placeholder="Entrez l'URL de votre site">
+                      <input type="url" class="form-control form-control-lg mb-2 mr-sm-2" :class="{'is-invalid': urlError}" v-model="url" required placeholder="Entrez l'URL de votre site">
+                      <div v-if="urlError" class="invalid-feedback">
+                        L'adresse de votre site est incorrecte ou n'existe pas.
+                      </div>
 
                     </div>
 
@@ -40,7 +43,11 @@
 
                     <div class="col-md-12 d-flex justify-content-center">
 
-                      <button class="btn btn-lg btn-submit" type="submit">Testez maintenant</button>
+                      <button v-if="checking" class="btn btn-lg btn-submit d-flex align-items-center" type="submit">
+                        <span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>
+                         Vérification de l'url...
+                      </button>
+                      <button v-else class="btn btn-lg btn-submit" type="submit">Testez maintenant</button>
 
                     </div>
 
@@ -76,21 +83,45 @@
             return {
                 result: null,
                 url: 'https://www.agencealbum.com',
+                checking: false,
+                urlError: false,
                 loading: false,
                 total: 0,
                 progress: 0,
                 lastprogress: 0,
                 interval: 0,
-                email: '',
+                email: 'martin@agencealbum.com',
                 ip: ''
             }
         },
 
         methods: {
 
-            scan(e) {
+            checkUrl(e) {
 
-                e.preventDefault();
+              let vm = this;
+              vm.urlError = false;
+              vm.checking = true;
+
+              e.preventDefault();
+
+              axios.post('/check/url', {url: this.url})
+                .then(function (response) {
+                  if(response.data) {
+                    vm.scan();
+                  } else {
+                    vm.urlError = true;
+                  }
+                  vm.checking = false;
+
+                })
+                .catch(function (error) {
+                  console.log(error);
+                })
+
+            },
+
+            scan() {
 
                 this.loading = true;
                 this.getProgress();
@@ -117,7 +148,7 @@
                   axios.get('/progress').then(response => {
                       console.log(response.data);
                       if (vm.lastprogress == response.data) {
-                        vm.progress = vm.progress + 0.5;
+                        vm.progress = vm.progress + 0.8;
                       } else {
                         vm.lastprogress = response.data;
                         vm.progress = response.data;

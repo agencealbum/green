@@ -12,13 +12,13 @@
 				<div class="row d-flex align-items-center h-100">
 
 					<div class="col-md-6">
-						<a :href="result.url" target="_blank">{{ result.url }}</a>
-						<h2>{{ result.title }}</h2>
-						<p>{{ result.tags.description }}</p>
+						<a :href="result.url" target="_blank">{{ result.infos.url }}</a>
+						<h2>{{ result.infos.title }}</h2>
+						<p>{{ result.infos.description }}</p>
 					</div>
 
 					<div class="col-md-3">
-						<donut :total="total"></donut>
+						<donut :total="result.total"></donut>
 					</div>
 					<div class="col-md-3">
 						<div class="bubble">
@@ -74,7 +74,7 @@
 
         name: 'scan-header',
 
-        props: ['result', 'total'],
+        props: ['result'],
 
     }
 

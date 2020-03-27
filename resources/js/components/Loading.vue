@@ -8,27 +8,10 @@
     </div>
 
     <div class="row mb-4 d-flex justify-content-center">
-      <div class="col-6">
-        <div class="progress" style="height: 2rem;">
-          <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" :style="'width:' + progress + '%'" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-12">
-        <div id="carouselExampleSlidesOnly" class="carousel slide text-center" data-ride="carousel">
-          <div class="carousel-inner">
-            <div class="carousel-item active">
-              Saisissez l'adresse d'un site web si vous la connaissez plutôt que de passer par un moteur de recherche.
-            </div>
-            <div class="carousel-item">
-              Désinscrivez-vous des bulletins d'information que vous ne lisez pas.
-            </div>
-            <div class="carousel-item">
-              Supprimez régulièrement les courriels qui ont été traités, et n'oubliez pas de vider la corbeille.
-            </div>
-          </div>
+      <div class="col-6 text-center">
+        <h2 class="mb-3">Votre site est en cours d'analyse</h2>
+        <div class="progress-bar">
+          <div class="loaded" :style="'transform: scaleX(' + progress + '%)'"></div>
         </div>
       </div>
     </div>
@@ -59,6 +42,26 @@
 
         }
 
-    }
+    };
 
 </script>
+
+
+<style>
+
+  .progress-bar {
+    height: 4px;
+    width: 100%;
+    background: white;
+    border-radius: 2px;
+  }
+
+  .loaded {
+    height: 100%;
+    width: 100%;
+    background: #4E483C;
+    transform-origin: 0%;
+    transition: all .5s ease;
+  }
+
+</style>

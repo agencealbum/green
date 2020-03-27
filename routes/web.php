@@ -12,6 +12,7 @@
 */
 
 Route::post('/scan', 'GreenController@scan');
+Route::post('/check/url', 'GreenController@url_exists');
 Route::get('/progress', 'GreenController@getProgess');
 
 Route::get('{any}', function () {

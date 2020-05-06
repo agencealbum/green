@@ -3,32 +3,33 @@
 
     <div class="results row mb-5">
 
-      <div class="col h-100 result result-1 justify-content-center align-self-center">
-        <img v-if="result.hosting > 50" src="/img/results/hosting-1.svg">
-        <img v-else src="/img/results/hosting-0.svg">
+      <div @click="showMore('hosting', $event)" class="hosting col-md-3 h-100 result result-1 justify-content-center align-self-center">
+        <img class="img-result" v-if="result.hosting > 50" src="/img/results/hosting-1.svg">
+        <img class="img-result" v-else src="/img/results/hosting-0.svg">
         <h4>Hébergement</h4>
         <animated-number :formatValue="formatNumber" :value="result.hosting"></animated-number> %
       </div>
 
-      <div class="col h-100 result result-2 justify-content-center align-self-center">
-        <img v-if="result.performance > 50" src="/img/results/performances-1.svg">
-        <img v-else src="/img/results/performances-0.svg">
+      <div @click="showMore('performances', $event)" class="performances col-md-3 h-100 result result-2 justify-content-center align-self-center">
+        <img class="img-result" v-if="result.performance > 50" src="/img/results/performances-1.svg">
+        <img class="img-result" v-else src="/img/results/performances-0.svg">
         <h4>Performances</h4>
         <animated-number :formatValue="formatNumber" :value="result.performance"></animated-number> %
       </div>
 
-      <div class="col h-100 result result-3 justify-content-center align-self-center">
-        <img v-if="result.usability > 50" src="/img/results/adaptability-1.svg">
-        <img v-else src="/img/results/adaptability-0.svg">
+      <div @click="showMore('usability', $event)" class="usability col-md-3 h-100 result result-3 justify-content-center align-self-center">
+        <img class="img-result" v-if="result.usability > 50" src="/img/results/adaptability-1.svg">
+        <img class="img-result" v-else src="/img/results/adaptability-0.svg">
         <h4>Adaptabilité</h4>
         <animated-number :formatValue="formatNumber" :value="result.usability"></animated-number> %
       </div>
 
-      <div class="col h-100 result result-4 justify-content-center align-self-center">
-        <img v-if="result.carbon > 50" src="/img/results/carbon-1.svg">
-        <img v-else src="/img/results/carbon-0.svg">
+      <div @click="showMore('carbon', $event)" class="carbon col-md-3 h-100 result result-4 justify-content-center align-self-center">
+        <img class="img-result" v-if="result.carbon > 50" src="/img/results/carbon-1.svg">
+        <img class="img-result" v-else src="/img/results/carbon-0.svg">
         <h4>Bilan carbone</h4>
-        <animated-number :formatValue="formatNumber" :value="result.carbon"></animated-number> %
+        <!--<animated-number :formatValue="formatNumber" :value="result.carbon.percent"></animated-number> %<br>-->
+        <small style="font-size:60%; display:block;">{{ result.carbon.g }}g de CO2<br> par visite</small>
       </div>
 
     </div>
@@ -54,7 +55,7 @@
 
     export default {
 
-        name: 'faq',
+        name: 'result',
 
         components: {
           AnimatedNumber
@@ -68,8 +69,34 @@
               return `${value.toFixed()}`;
             },
 
+            showMore(el, event) {
+
+              var div = $(event.target).closest('.result');
+
+              var scrollTop     = $(window).scrollTop(),
+                  scrollLeft    = $(window).scrollLeft(),
+                  elementOffsetTop = $(event.target).offset().top,
+                  elementOffsetLeft = $(event.target).offset().left,
+                  distanceTop      = (elementOffsetTop - scrollTop),
+                  distanceLeft      = (elementOffsetLeft - scrollLeft) - 40;
+
+              this.$emit('show-more', 'hosting');
+
+              $('.result').removeClass('active').addClass('hide');
+
+              div.removeClass('hide')
+                  .addClass('active')
+                  .css('transform', 'translate(' + -distanceLeft + 'px, 0)')
+                  .delay(1000)
+                  .queue(function (next) {
+                    $(this).css('transform', 'translate(' + -distanceLeft + 'px, ' + -distanceTop + 'px)');
+                    next();
+                  })
+                  
+            }
+
         }
 
-    }
+    };
 
 </script>

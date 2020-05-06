@@ -11,16 +11,29 @@
 |
 */
 
+Auth::routes(['register' => false]);
+
 Route::post('/scan', 'GreenController@scan');
 Route::post('/check/url', 'GreenController@url_exists');
 Route::get('/progress', 'GreenController@getProgess');
+
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {
+	Route::get('/', 'AdminController@index');
+});
+/*
+Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {
+	Route::get('/', 'AdminController@index');
+});
+*/
+
 
 Route::get('{any}', function () {
     return view('app');
 })->where('any', '.*');
 
 /*
-Auth::routes();
+
 
 
 Route::get('/', 'GreenController@index');

@@ -7,6 +7,7 @@ use App\Scan;
 use GuzzleHttp\Client;
 use Goutte\Client as Goutte;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class GreenController extends Controller
 {
@@ -19,10 +20,64 @@ class GreenController extends Controller
 		return view('welcome');
 	}
 
+	public function verification(Request $request)
+	{
+	    $validator = Validator::make($request->all(), [
+	        'url' => 'required|url',
+	        'email' => 'required|email:rfc,dns'
+	    ]);
+
+ 		if ($validator->fails()) {
+
+ 			return response()->json(['url' => false, 'email' => false]);
+
+ 		} else {
+
+			$file_headers = @get_headers($request->url);
+			$urlexists = (!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') ? false : true;
+
+			$verified = VerifyEmail::where('email', $request->email)->andWhere('verified', true)->exists();
+
+			if ($urlexists) {
+
+				if ($verified) {
+
+					return response()->json(['url' => true, 'email' => true]);
+
+				} else {
+
+			        $verify = new Verifyemail;
+			        $verify->email = $request->get('email');
+			        $verify->code = mt_rand(10000, 99999);
+			        $scan->save();
+
+			        return response()->json(['url' => true, 'email' => false]);
+
+				}
+
+			} else {
+
+				return response()->json(['url' => false, 'email' => false]);
+
+			}
+
+		}
+
+	}
 
 	// Check if the requested url exists
 	public function url_exists(Request $request)
 	{
+
+	    $validator = Validator::make($request->all(), [
+	        'url' => 'required|url',
+	        'email' => 'required|email:rfc,dns'
+	    ]);
+
+ 		if ($validator->fails()) {
+ 			return response()->json(false);
+ 		}
+
 		$file_headers = @get_headers($request->url);
 		$exists = (!$file_headers || $file_headers[0] == 'HTTP/1.1 404 Not Found') ? false : true;
 	    return response()->json($exists);
@@ -51,36 +106,44 @@ class GreenController extends Controller
 		Session::put('progress', 0);
 		Session::save();
 
-		if( $hosting = $this->hosting() ) {
-
+		// HOSTING
+		try {
+			$hosting = $this->hosting();
 			$this->incrementProgess();
-
-			if( $pagespeed = $this->pagespeed() ) {
-
-				$this->incrementProgess();
-
-				$performance = $pagespeed->getSpeedScore();
-				$usability = $pagespeed->getUsabilityScore();
-				
-
-				if( $carbon = $this->carbon() ) {
-
-					$this->incrementProgess();
-
-					if( $infos = $this->infos() ) {
-						$infos['url'] = $this->url;
-						$infos['email'] = $request->email;
-						$infos['ip'] = $request->ip();
-						$this->incrementProgess();
-					}
-
-				}
-
-			}
+		} catch (Exception $e) {
 
 		}
 
-		$total = round( ($hosting + $performance + $usability + $carbon) / 4);
+		// PAGESPEED
+		try {
+			$pagespeed = $this->pagespeed();
+			$performance = $pagespeed->getSpeedScore();
+			$usability = $pagespeed->getUsabilityScore();
+			$this->incrementProgess();
+		} catch (Exception $e) {
+
+		}
+
+		// CARBON
+		try {
+			$carbon = $this->carbon();
+			$this->incrementProgess();
+		} catch (Exception $e) {
+
+		}
+
+		// INFOS
+		try {
+			$infos = $this->infos();
+			$infos['url'] = $this->url;
+			$infos['email'] = $request->email;
+			$infos['ip'] = $request->ip();
+			$this->incrementProgess();
+		} catch (Exception $e) {
+
+		}
+
+		$total = round( ($hosting + $performance + $usability + intval($carbon['percent']) ) / 4);
 
 		$result = [
 			'hosting' => $hosting,
@@ -107,7 +170,7 @@ class GreenController extends Controller
         $scan->hosting_score = $result['hosting'];
         $scan->performance_score = $result['performance'];
         $scan->responsive_score = $result['usability'];
-        $scan->carbon_score = $result['carbon'];
+        $scan->carbon_score = $result['carbon']['percent'];
         $scan->total_score = $result['total'];
 
         $scan->save();
@@ -163,14 +226,18 @@ class GreenController extends Controller
 		$client = new Client();
 
 		$response = $client->request('GET', $endpoint, ['query' => [
-		    'url' => $this->url, 
+		    'url' => $this->remove_http($this->url)
 		]]);
 
 		$statusCode = $response->getStatusCode();
 		$carbon = json_decode($response->getBody(), true); // Carbon (gramme)
-		$carbon = intval(round( ($carbon['c'] > 1) ? 0 : (100 - ($carbon['c'] * 100)), 0 )); // Convert to percent
 
-		return $carbon;
+		$percent = intval(round( ($carbon['c'] > 2) ? 0 : (100 - ($carbon['c']/2 * 100)), 0 )); // Convert to percent
+
+		return array(
+			'g' => $carbon['c'],
+			'percent' => $percent
+		);
 
     }
 
@@ -181,7 +248,7 @@ class GreenController extends Controller
 		$crawler = $client->request('GET', $this->url);
 
 		$title = $crawler->filter('title')->text();
-		$description = $crawler->filterXpath('//meta[@name="description"]')->eq(0)->attr('content');
+		$description = ($crawler->filterXpath('//meta[@name="description"]')->count()) ? $crawler->filterXpath('//meta[@name="description"]')->eq(0)->attr('content') : '';
 
 		return array(
 			'title' => $title,

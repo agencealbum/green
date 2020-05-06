@@ -18,14 +18,20 @@
 
 						<!-- EMAIL -->
 						<div class="form-group">
-							<label for="email">Votre adresse email</label>
+							<label for="email">Email</label>
 							<input type="email" class="form-control" v-model="mail.email" id="email" required>
 						</div>
 
 						<!-- TEL -->
 						<div class="form-group">
-							<label for="tel">Votre adresse email</label>
-							<input type="tel" class="form-control" v-model="mail.tel" id="tel">
+							<label for="tel">Téléphone</label>
+							<input type="tel" class="form-control" v-model="mail.tel" id="tel" required>
+						</div>
+
+						<!-- NOM -->
+						<div class="form-group">
+							<label for="name">Prénom, Nom</label>
+							<input type="text" class="form-control" v-model="mail.name" id="name" required>
 						</div>
 
 						<!-- MESSAGE -->
@@ -62,13 +68,13 @@
                 	url: '',
                 	email: '',
                 	tel: '',
-                	message: "Bonjour,\nJe souhaiterais avoir plus d'informations concernant l'optimisation de mon site.",
+                	message: "",
                 },
             }
         },
 
         name: 'contact',
 
-    }
+    };
 
 </script>

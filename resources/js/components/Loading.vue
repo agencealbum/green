@@ -2,7 +2,7 @@
 
   <div class="container-fluid">
 
-    <div class="spinner">
+    <div class="d-none d-lg-block spinner">
       <div class="double-bounce1"></div>
       <div class="double-bounce2"></div>
     </div>

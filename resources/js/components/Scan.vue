@@ -2,7 +2,7 @@
 
    <div>
 
-      <scan-header :result="result" :total="total"></scan-header>
+      <scan-header :result="result" :total="total" :class="{hide : more}"></scan-header>
 
       <loading v-if="loading" :progress="progress"></loading>
 
@@ -23,7 +23,8 @@
                     <div class="col-md-6">
 
                       <label class="sr-only" for="inlineFormInputName2"></label>
-                      <input type="email" class="form-control form-control-lg mb-2 mr-sm-2" v-model="email" placeholder="Entrez votre email">
+                      <input type="email" class="form-control form-control-lg mb-2 mr-sm-2" v-model="email" required placeholder="Entrez votre email">
+                      <small>Un code de vérification sera envoyé par email pour confirmer l'adresse.</small>
 
                     </div>
 
@@ -64,8 +65,10 @@
         </section>
 
         <transition name="fade" mode="out-in">
-          <result v-if="result" :result="result"></result>
+          <result v-if="result" :result="result" v-on:show-more="more = $event"></result>
         </transition>
+
+        <more :class="{active : more}" v-on:show-more="hideMore" :about="more"></more>
 
       </template>
 
@@ -82,7 +85,7 @@
         data: function () {
             return {
                 result: null,
-                url: 'https://www.agencealbum.com',
+                url: '',
                 checking: false,
                 urlError: false,
                 loading: false,
@@ -91,11 +94,49 @@
                 lastprogress: 0,
                 interval: 0,
                 email: 'martin@agencealbum.com',
-                ip: ''
+                ip: '',
+                more: null,
             }
         },
 
+        watch: {
+
+          url: function (newUrl, oldUrl) {
+            if (!this.url.match(/^[a-zA-Z]+:\/\//))
+            {
+                this.url = 'https://' + this.url;
+            }
+          }
+
+        },
+
         methods: {
+
+          verification() {
+
+            axios.post('/verification', {url: this.url, email: this.email})
+              .then(function (response) {
+                console.log(response.data);
+              });
+
+          },
+
+          hideMore(event) {
+
+            this.more = null;
+            $('.result').delay(1000).removeClass('hide');
+
+            $('.result.active').removeClass('active')
+                  .css('transform', 'translateY(0)')
+                  .delay(1000)
+                  .queue(function (next) {
+                    $(this).css('transform', 'translateX(0)')
+                    next();
+                  })
+
+
+          },
+
 
             checkUrl(e) {
 
@@ -105,7 +146,7 @@
 
               e.preventDefault();
 
-              axios.post('/check/url', {url: this.url})
+              axios.post('/check/url', {url: this.url, email: this.email})
                 .then(function (response) {
                   if(response.data) {
                     vm.scan();
@@ -136,7 +177,7 @@
 
             calculate() {
 
-              var sum = this.result.performance + this.result.usability + this.result.carbon + this.result.hosting;
+              var sum = this.result.performance + this.result.usability + this.result.carbon.percent + this.result.hosting;
               this.total = Math.round(sum / 4);
 
             },
@@ -148,7 +189,7 @@
                   axios.get('/progress').then(response => {
                       console.log(response.data);
                       if (vm.lastprogress == response.data) {
-                        vm.progress = vm.progress + 0.8;
+                        vm.progress = vm.progress + 1.2; // 0.8
                       } else {
                         vm.lastprogress = response.data;
                         vm.progress = response.data;

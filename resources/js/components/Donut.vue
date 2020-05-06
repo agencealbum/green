@@ -60,6 +60,10 @@ export default {
 			let vm = this;
 			Chart.pluginService.register({
 				beforeDraw: function(chart) {
+
+					chart.canvas.parentNode.style.height = '25vh';
+					chart.canvas.parentNode.style.width = '25vh';
+
 					var width = chart.chart.width,
 					height = chart.chart.height,
 					ctx = chart.chart.ctx;

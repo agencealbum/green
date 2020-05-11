@@ -31,13 +31,10 @@ class ContactController extends Controller
 		    'message' => $request->get('message')
 		);
 
-		try{
-			Notification::route('mail', 'album@agencealbum.com')->notify(new NouveauMessage($email));
-		}
-		catch(\Exception $e){
-		    //dd($e);
-		    abort(422, 'Une erreur a eu lieu lors de l\'envoi du mail.');
-		}
+		$response = Notification::route('mail', 'album@agencealbum.com')->notify(new NouveauMessage($email));
+
+		return response()->json($response);
+
 	}
 
 }

@@ -30,7 +30,7 @@ class ContactController extends Controller
 		    'message' => $request->get('message')
 		);
 
-		$response = Notification::route('mail', 'album@agencealbum.com')->notify(new NouveauMessage($email));
+		$response = Notification::route('mail', ['album@agencealbum.com', 'maxime.massa@agencealbum.com'])->notify(new NouveauMessage($email));
 
 		return response()->json($response);
 

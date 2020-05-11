@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
-use App\Notifications\NewTest;
+use App\Notifications\NouveauMessage;
 
 class ContactController extends Controller
 {
@@ -31,10 +31,8 @@ class ContactController extends Controller
 		    'message' => $request->get('message')
 		);
 
-		Notification::route('mail', 'album@agencealbum.com')->notify(new NewTest($email));
-
 		try{
-			Mail::to('album@agencealbum.com')->send(new Contact($email));
+			Notification::route('mail', 'album@agencealbum.com')->notify(new NouveauMessage($email));
 		}
 		catch(\Exception $e){
 		    //dd($e);

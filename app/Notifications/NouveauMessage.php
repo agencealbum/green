@@ -5,13 +5,13 @@ namespace App\Notifications;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
+use Notification;
 
-class NewTest extends Notification
+class NouveauMessage extends Notification
 {
     use Queueable;
 
-    public $email;
+    private $email;
 
     /**
      * Create a new notification instance.
@@ -43,7 +43,7 @@ class NewTest extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->greeting('Nouveau test!')
+            ->greeting('Nouveau message!')
             ->line('Nom : ' . $this->email['name'])
             ->line('Email : ' . $this->email['email'])
             ->line('Tel. : ' . $this->email['tel'])

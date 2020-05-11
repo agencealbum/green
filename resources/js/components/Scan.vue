@@ -92,7 +92,7 @@
                 progress: 0,
                 lastprogress: 0,
                 interval: 0,
-                email: 'martin@agencealbum.com',
+                email: '',
                 ip: '',
                 more: null,
             }

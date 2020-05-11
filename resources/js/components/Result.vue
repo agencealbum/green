@@ -80,7 +80,7 @@
                   distanceTop      = (elementOffsetTop - scrollTop),
                   distanceLeft      = (elementOffsetLeft - scrollLeft);
 
-              this.$emit('show-more', 'hosting');
+              this.$emit('show-more', el);
 
               $('.result').removeClass('active').addClass('hide');
               $('.header').addClass('hide');

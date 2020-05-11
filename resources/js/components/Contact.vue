@@ -79,11 +79,11 @@
         data: function () {
             return {
                 mail: {
-                	url: 'https://blinest.com',
-                	name: 'Martin',
-                	email: 'martin.chevignard@gmail.com',
-                	tel: '0688210514',
-                	message: "Message test",
+                	url: '',
+                	name: '',
+                	email: '',
+                	tel: '',
+                	message: "",
                 },
                 validationErrors: false,
                 success: false,

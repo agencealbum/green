@@ -21,8 +21,14 @@
 						<donut :total="result.total"></donut>
 					</div>
 					<div class="col-md-3 d-none d-md-block">
-						<div class="bubble">
-							<p>Bravo,<br>quelques améliorations permettraient à votre site d’être au top !</p>
+						<div v-if="result.total >= 85" class="bubble">
+							<p>Bravo, votre site est quasiment au top !<br></p>
+						</div>
+						<div v-if="result.total >= 65 && result.total < 85" class="bubble">
+							<p>C'est bien,<br>quelques améliorations permettraient à votre site d’être au top !</p>
+						</div>
+						<div v-if="result.total < 65" class="bubble">
+							<p>Bof bof,<br>votre site peut être optimisé pour un meilleur résultat.</p>
 						</div>
 					</div>
 

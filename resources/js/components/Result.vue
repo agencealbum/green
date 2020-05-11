@@ -78,18 +78,21 @@
                   elementOffsetTop = $(event.target).offset().top,
                   elementOffsetLeft = $(event.target).offset().left,
                   distanceTop      = (elementOffsetTop - scrollTop),
-                  distanceLeft      = (elementOffsetLeft - scrollLeft) - 40;
+                  distanceLeft      = (elementOffsetLeft - scrollLeft);
 
               this.$emit('show-more', 'hosting');
 
               $('.result').removeClass('active').addClass('hide');
+              $('.header').addClass('hide');
 
               div.removeClass('hide')
                   .addClass('active')
-                  .css('transform', 'translate(' + -distanceLeft + 'px, 0)')
+                  .attr('data-left', distanceLeft)
+                  .attr('data-top', distanceTop)
+                  .css('transform', 'translate(' + (-distanceLeft - 40) + 'px, 0)')
                   .delay(1000)
                   .queue(function (next) {
-                    $(this).css('transform', 'translate(' + -distanceLeft + 'px, ' + -distanceTop + 'px)');
+                    $(this).css('transform', 'translate(' + (-distanceLeft - 40) + 'px, ' + (-distanceTop + 200) + 'px)');
                     next();
                   })
                   

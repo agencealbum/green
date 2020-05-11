@@ -9,7 +9,7 @@
 
     <div class="row mb-4 d-flex justify-content-center">
       <div class="col-6 text-center">
-        <h2 class="mb-3">Votre site est en cours d'analyse</h2>
+        <h2 class="mb-3">Nos petits robots verts<br>inspectent votre site...</h2>
         <div class="progress-bar">
           <div class="loaded" :style="'transform: scaleX(' + progress + '%)'"></div>
         </div>

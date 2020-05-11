@@ -33,7 +33,7 @@
 }
 */
 .result.hide {
-	transform: translateY(-10px);
+	left: -10vw;
 	opacity: 0;
 }
 
@@ -48,7 +48,7 @@
 }
 .bubble:after, .bubble:before {
 	right: 100%;
-	top: 50%;
+	top: 60%;
 	border: solid transparent;
 	content: " ";
 	height: 0;

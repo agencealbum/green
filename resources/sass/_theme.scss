@@ -36,7 +36,7 @@ h1 {
   width: 40px;
   height: 40px;
   position: relative;
-  margin: 100px auto;
+  margin: 2vh auto;
 }
 
 .carousel-item {
@@ -107,6 +107,15 @@ h1 {
   left: 30%;
 }
 
+@media screen and (max-width: 950px) {
+
+  .more.active {
+    left: 0;
+    width: 100%;
+  }
+
+}
+
 .more .more-content {
   position: relative;
   top: 10vh;
@@ -160,7 +169,7 @@ h1 {
 
 
 .footer {
-  position: absolute;
+  position: relative;
   left: 0;
   right: 0;
   bottom: 0;

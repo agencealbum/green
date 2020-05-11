@@ -1,41 +1,33 @@
 <template>
 	
-	<section class="more">
+	<section class="more d-flex align-items-center">
 
-		<div class="float-right close-more">
-			<button @click="$emit('show-more', null)" class="btn">X</button>
+		<div class="close-more">
+			<button @click="$emit('show-more', null)" class="btn">×</button>
 		</div>
 		
 		<div v-if="about === 'hosting'" class="more-content">
 
 			<h2>Hébergement</h2>
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dignissim libero id congue congue. Fusce volutpat interdum lectus, et facilisis nisi hendrerit sagittis. Donec ac nibh ac ex maximus aliquet a sed augue. Phasellus in justo elementum, pellentesque dolor id, vulputate mi. Nam mollis nisi in rutrum eleifend. Duis blandit ac augue id commodo. Donec sed tellus eu mauris euismod posuere. Donec commodo, ipsum quis auctor tempus, erat felis laoreet felis, vel vehicula purus leo at leo. Etiam vel lacus vitae dolor euismod ullamcorper. Proin sit amet tellus neque. Phasellus cursus vel ligula id aliquam.</p>
-
-			<p>Donec at mollis arcu. Proin vitae risus nec mauris mollis pulvinar. Praesent congue, urna vel fringilla malesuada, ipsum velit faucibus nunc, in ultrices dolor eros ut elit. Duis sodales consequat quam nec fermentum. Phasellus quis tortor ac massa sodales viverra scelerisque in tellus. Sed ac suscipit sem. Sed eleifend vel nunc non semper. Nunc aliquam vehicula odio in rutrum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at commodo dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus at faucibus eros. Morbi eu mi luctus, eleifend ligula vitae, lobortis felis. Praesent lobortis nunc dolor, id faucibus nibh feugiat eget.</p>
+			<p>Tous les hébergeurs, semble-t-il, n’ont pas encore intégré leur rôle dans la préservation de notre environnement. Si certains utilisent des énergies renouvelables, du watercooling et l’air extérieur pour refroidir... d’autres font tourner des climatisations excessivement énergivores et à énergies fossiles. Pas top!</p>
 
 		</div>
 
 		<div v-if="about === 'performances'" class="more-content">
 
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dignissim libero id congue congue. Fusce volutpat interdum lectus, et facilisis nisi hendrerit sagittis. Donec ac nibh ac ex maximus aliquet a sed augue. Phasellus in justo elementum, pellentesque dolor id, vulputate mi. Nam mollis nisi in rutrum eleifend. Duis blandit ac augue id commodo. Donec sed tellus eu mauris euismod posuere. Donec commodo, ipsum quis auctor tempus, erat felis laoreet felis, vel vehicula purus leo at leo. Etiam vel lacus vitae dolor euismod ullamcorper. Proin sit amet tellus neque. Phasellus cursus vel ligula id aliquam.</p>
-
-			<p>Donec at mollis arcu. Proin vitae risus nec mauris mollis pulvinar. Praesent congue, urna vel fringilla malesuada, ipsum velit faucibus nunc, in ultrices dolor eros ut elit. Duis sodales consequat quam nec fermentum. Phasellus quis tortor ac massa sodales viverra scelerisque in tellus. Sed ac suscipit sem. Sed eleifend vel nunc non semper. Nunc aliquam vehicula odio in rutrum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at commodo dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus at faucibus eros. Morbi eu mi luctus, eleifend ligula vitae, lobortis felis. Praesent lobortis nunc dolor, id faucibus nibh feugiat eget.</p>
+			<p>Le site est un «poids» pour l’environnement: images très lourdes, médias non optimisés, temps de chargement très longs... chaque page consomme beaucoup de ressources!Site bien pensé en amont, médias légers et code épuré, l’environnement est heureux...les utilisateurs aussi!</p>
 
 		</div>
 
 		<div v-if="about === 'usability'" class="more-content">
 
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dignissim libero id congue congue. Fusce volutpat interdum lectus, et facilisis nisi hendrerit sagittis. Donec ac nibh ac ex maximus aliquet a sed augue. Phasellus in justo elementum, pellentesque dolor id, vulputate mi. Nam mollis nisi in rutrum eleifend. Duis blandit ac augue id commodo. Donec sed tellus eu mauris euismod posuere. Donec commodo, ipsum quis auctor tempus, erat felis laoreet felis, vel vehicula purus leo at leo. Etiam vel lacus vitae dolor euismod ullamcorper. Proin sit amet tellus neque. Phasellus cursus vel ligula id aliquam.</p>
-
-			<p>Donec at mollis arcu. Proin vitae risus nec mauris mollis pulvinar. Praesent congue, urna vel fringilla malesuada, ipsum velit faucibus nunc, in ultrices dolor eros ut elit. Duis sodales consequat quam nec fermentum. Phasellus quis tortor ac massa sodales viverra scelerisque in tellus. Sed ac suscipit sem. Sed eleifend vel nunc non semper. Nunc aliquam vehicula odio in rutrum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at commodo dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus at faucibus eros. Morbi eu mi luctus, eleifend ligula vitae, lobortis felis. Praesent lobortis nunc dolor, id faucibus nibh feugiat eget.</p>
+			<p>37,4 millions de mobinautes chaque jour, le smartphone est le premierécran pour se connecter au quotidien! L’optimisation du responsive de chaque site est donc essentielle! Ergonomie peu intuitive: et le mobinaute s’agace, ouvre des pages pour rien...et consomme de l’énergie inutilement. Une bonne expérience utilisateur sur mobile et tout le monde est heureux!</p>
 
 		</div>
 
 		<div v-if="about === 'carbon'" class="more-content">
 
-			<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi dignissim libero id congue congue. Fusce volutpat interdum lectus, et facilisis nisi hendrerit sagittis. Donec ac nibh ac ex maximus aliquet a sed augue. Phasellus in justo elementum, pellentesque dolor id, vulputate mi. Nam mollis nisi in rutrum eleifend. Duis blandit ac augue id commodo. Donec sed tellus eu mauris euismod posuere. Donec commodo, ipsum quis auctor tempus, erat felis laoreet felis, vel vehicula purus leo at leo. Etiam vel lacus vitae dolor euismod ullamcorper. Proin sit amet tellus neque. Phasellus cursus vel ligula id aliquam.</p>
-
-			<p>Donec at mollis arcu. Proin vitae risus nec mauris mollis pulvinar. Praesent congue, urna vel fringilla malesuada, ipsum velit faucibus nunc, in ultrices dolor eros ut elit. Duis sodales consequat quam nec fermentum. Phasellus quis tortor ac massa sodales viverra scelerisque in tellus. Sed ac suscipit sem. Sed eleifend vel nunc non semper. Nunc aliquam vehicula odio in rutrum. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut at commodo dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus at faucibus eros. Morbi eu mi luctus, eleifend ligula vitae, lobortis felis. Praesent lobortis nunc dolor, id faucibus nibh feugiat eget.</p>
+			<p>Un site dégage du  carbone! Eloignement physique entre les serveurs et leurs utilisateurs –aie aie aie, mon site est en chine et mes utilisateurs principalement en France!-, poids des pages, temps de chargement,... et le carbone augmente, augmente. Pollue, pollue, pollue... Ca fait peur</p>
 
 		</div>
 
@@ -59,4 +51,17 @@
     };
 
 </script>
+
+<style scoped>
+
+	.close-more {
+		position: absolute;
+		top: 10vh;
+		right: 10vh;
+	}
+	.close-more > .btn {
+		font-size: 2rem;
+	}
+
+</style>
 

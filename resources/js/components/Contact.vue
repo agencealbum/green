@@ -8,10 +8,6 @@
 
 				<div class="col-md-12">
 
-					<div v-if="success" class="alert alert-success">
-						Votre message a correctement été envoyé.
-					</div>
-
 					<div v-if="validationErrors">
                         <ul class="alert alert-danger">
                             <li v-for="(value, key, index) in validationErrors">{{ value }}</li>
@@ -35,7 +31,7 @@
 						<!-- TEL -->
 						<div class="form-group">
 							<label for="tel">Téléphone</label>
-							<input type="tel" class="form-control" v-model="mail.tel" id="tel" >
+							<input type="tel" class="form-control" v-model="mail.tel" id="tel" required>
 						</div>
 
 						<!-- NOM -->
@@ -51,7 +47,11 @@
 						</div>
 
 
-						<div class="form-group">
+						<div v-if="success" class="alert alert-success">
+							Votre message a correctement été envoyé.
+						</div>
+
+						<div v-else class="form-group">
 							<button class="btn btn-lg btn-submit" type="submit">Envoyer</button>
 						</div>
 

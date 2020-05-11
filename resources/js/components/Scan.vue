@@ -2,7 +2,7 @@
 
    <div>
 
-      <scan-header :result="result" :total="total" :class="{hide : more}"></scan-header>
+      <scan-header :result="result" :total="total"></scan-header>
 
       <loading v-if="loading" :progress="progress"></loading>
 
@@ -125,11 +125,14 @@
             this.more = null;
             $('.result').delay(1000).removeClass('hide');
 
+            var left = parseFloat($('.result.active').attr('data-left'));
+
             $('.result.active').removeClass('active')
-                  .css('transform', 'translateY(0)')
-                  .delay(1000)
+                  .css('transform', 'translate(' + (-left - 40) + 'px, 0px)')
+                  .delay(200)
                   .queue(function (next) {
-                    $(this).css('transform', 'translateX(0)')
+                    $(this).css('transform', 'translateX(0)');
+                    $('.header').removeClass('hide');
                     next();
                   })
 
@@ -205,6 +208,6 @@
             }
 
         }
-    }
+    };
 
 </script>

@@ -16,6 +16,7 @@ Auth::routes(['register' => false]);
 Route::post('/scan', 'GreenController@scan');
 Route::post('/check/url', 'GreenController@url_exists');
 Route::get('/progress', 'GreenController@getProgess');
+Route::post('/email/send', 'ContactController@send')->name('email.send');
 
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {

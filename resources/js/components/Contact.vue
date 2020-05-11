@@ -8,7 +8,17 @@
 
 				<div class="col-md-12">
 
-					<form role="form" method="post" data-toggle="validator">
+					<div v-if="success" class="alert alert-success">
+						Votre message a correctement été envoyé.
+					</div>
+
+					<div v-if="validationErrors">
+                        <ul class="alert alert-danger">
+                            <li v-for="(value, key, index) in validationErrors">{{ value }}</li>
+                        </ul>
+                    </div>
+
+					<form role="form" method="post" data-toggle="validator" @submit="sendEmail">
 
 						<!-- URL -->
 						<div class="form-group">
@@ -25,7 +35,7 @@
 						<!-- TEL -->
 						<div class="form-group">
 							<label for="tel">Téléphone</label>
-							<input type="tel" class="form-control" v-model="mail.tel" id="tel" required>
+							<input type="tel" class="form-control" v-model="mail.tel" id="tel" >
 						</div>
 
 						<!-- NOM -->
@@ -42,7 +52,7 @@
 
 
 						<div class="form-group">
-							<button class="btn btn-lg btn-submit" type="submit">Je veux optimier mon site</button>
+							<button class="btn btn-lg btn-submit" type="submit">Envoyer</button>
 						</div>
 
 
@@ -62,18 +72,45 @@
 
     export default {
 
+        name: 'contact',
+
+        props: ['url', 'email'],
+
         data: function () {
             return {
                 mail: {
-                	url: '',
-                	email: '',
-                	tel: '',
-                	message: "",
+                	url: 'https://blinest.com',
+                	name: 'Martin',
+                	email: 'martin.chevignard@gmail.com',
+                	tel: '0688210514',
+                	message: "Message test",
                 },
+                validationErrors: false,
+                success: false,
             }
         },
 
-        name: 'contact',
+        methods: {
+
+
+        	sendEmail(event) {
+
+        		event.preventDefault();
+        		this.validationErrors = false;
+        		let vm = this;
+
+        		axios.post('/email/send', this.mail).then(function (response) {
+					if(response.status == 200) vm.success = true;
+				}).catch(error => {
+					console.log(error);
+					if (error.response.status == 422){
+						this.validationErrors = error.response.data.errors;
+					}
+				});
+
+        	}
+
+        }
 
     };
 

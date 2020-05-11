@@ -24,7 +24,6 @@
 
                       <label class="sr-only" for="inlineFormInputName2"></label>
                       <input type="email" class="form-control form-control-lg mb-2 mr-sm-2" v-model="email" required placeholder="Entrez votre email">
-                      <small>Un code de vérification sera envoyé par email pour confirmer l'adresse.</small>
 
                     </div>
 

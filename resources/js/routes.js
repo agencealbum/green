@@ -6,7 +6,8 @@ export const routes = [
     {
         name: 'home',
         path: '/',
-        component: Scan
+        component: Scan,
+        props: true,
     },
     {
         name: 'faq',

@@ -111,7 +111,7 @@ class GreenController extends Controller
 			$hosting = $this->hosting();
 			$this->incrementProgess();
 		} catch (Exception $e) {
-
+			return response()->json(['error' => true]);
 		}
 
 		// PAGESPEED
@@ -121,7 +121,7 @@ class GreenController extends Controller
 			$usability = $pagespeed->getUsabilityScore();
 			$this->incrementProgess();
 		} catch (Exception $e) {
-
+			return response()->json(['error' => true]);
 		}
 
 		// CARBON
@@ -129,7 +129,7 @@ class GreenController extends Controller
 			$carbon = $this->carbon();
 			$this->incrementProgess();
 		} catch (Exception $e) {
-
+			return response()->json(['error' => true]);
 		}
 
 		// INFOS
@@ -140,7 +140,7 @@ class GreenController extends Controller
 			$infos['ip'] = $request->ip();
 			$this->incrementProgess();
 		} catch (Exception $e) {
-
+			return response()->json(['error' => true]);
 		}
 
 		$total = round( ($hosting + $performance + $usability + intval($carbon['percent']) ) / 4);
@@ -247,8 +247,19 @@ class GreenController extends Controller
 
 		$crawler = $client->request('GET', $this->url);
 
-		$title = $crawler->filter('title')->text();
-		$description = ($crawler->filterXpath('//meta[@name="description"]')->count()) ? $crawler->filterXpath('//meta[@name="description"]')->eq(0)->attr('content') : '';
+		try {
+			$title = ($crawler->filter('title')->count()) ? $crawler->filter('title')->text() : 'Aucun titre';
+		} catch(Exception $e) {
+			$title = 'Aucun titre';
+		}
+
+		try {
+			$description = ($crawler->filterXpath('//meta[@name="description"]')->count()) ? $crawler->filterXpath('//meta[@name="description"]')->eq(0)->attr('content') : '';
+
+		} catch(Exception $e) {
+			$description = "Aucune description";
+		}
+
 
 		return array(
 			'title' => $title,

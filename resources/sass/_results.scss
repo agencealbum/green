@@ -4,11 +4,11 @@
 
 .result {
 	//animation: bounce 2s ease infinite;
-	transition: all .6s ease;
+	transition: all 1s ease;
 	cursor: pointer;
 	transform-origin: 50% 50%;
 	opacity: 1;
-	transform: translateX(0px);
+	left: 0;
 }
 
 .result-1 {
@@ -34,7 +34,7 @@
 }
 */
 .result.hide {
-	transform: translateX(-30px);
+	left: -30px;
 	opacity: 0;
 }
 

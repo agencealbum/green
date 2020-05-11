@@ -111,15 +111,6 @@
 
         methods: {
 
-          verification() {
-
-            axios.post('/verification', {url: this.url, email: this.email})
-              .then(function (response) {
-                console.log(response.data);
-              });
-
-          },
-
           hideMore(event) {
 
             this.more = null;
@@ -174,6 +165,8 @@
                     this.result = response.data;
                     this.loading = false;
                     this.calculate();
+                }).catch(function (error) {
+                  console.log(error);
                 });
             },
 

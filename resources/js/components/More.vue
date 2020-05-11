@@ -61,6 +61,13 @@
 	}
 	.close-more > .btn {
 		font-size: 2rem;
+	    overflow: hidden;
+	    transition-duration: 0.8s;
+	    transition-property: transform;
+	}
+	.close-more > .btn:hover {
+	    transform: rotate(360deg);
+	    -webkit-transform: rotate(360deg);
 	}
 
 </style>

@@ -89,10 +89,10 @@
                   .addClass('active')
                   .attr('data-left', distanceLeft)
                   .attr('data-top', distanceTop)
-                  .css('transform', 'translate(' + (-distanceLeft - 40) + 'px, 0)')
+                  .css('transform', 'translate(' + (-distanceLeft + 100) + 'px, 0)')
                   .delay(1000)
                   .queue(function (next) {
-                    $(this).css('transform', 'translate(' + (-distanceLeft - 40) + 'px, ' + (-distanceTop + 200) + 'px)');
+                    $(this).css('transform', 'translate(' + (-distanceLeft + 100) + 'px, ' + (-distanceTop + 200) + 'px)');
                     next();
                   })
                   

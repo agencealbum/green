@@ -8,6 +8,7 @@
 	cursor: pointer;
 	transform-origin: 50% 50%;
 	opacity: 1;
+	transform: translateX(0px);
 }
 
 .result-1 {
@@ -33,7 +34,7 @@
 }
 */
 .result.hide {
-	left: -10vw;
+	transform: translateX(-30px);
 	opacity: 0;
 }
 

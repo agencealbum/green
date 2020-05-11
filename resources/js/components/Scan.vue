@@ -123,14 +123,14 @@
           hideMore(event) {
 
             this.more = null;
-            $('.result').delay(1000).removeClass('hide');
 
             var left = parseFloat($('.result.active').attr('data-left'));
 
             $('.result.active').removeClass('active')
-                  .css('transform', 'translate(' + (-left - 40) + 'px, 0px)')
-                  .delay(200)
+                  .css('transform', 'translate(' + (-left + 100) + 'px, 0px)')
+                  .delay(1000)
                   .queue(function (next) {
+                    $('.result').removeClass('hide');
                     $(this).css('transform', 'translateX(0)');
                     $('.header').removeClass('hide');
                     next();

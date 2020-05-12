@@ -44,6 +44,7 @@ class NouveauMessage extends Notification
     {
         return (new MailMessage)
             ->greeting('Nouveau message!')
+            ->line('Société : ' . $this->email['company'])
             ->line('Nom : ' . $this->email['name'])
             ->line('Email : ' . $this->email['email'])
             ->line('Tel. : ' . $this->email['tel'])

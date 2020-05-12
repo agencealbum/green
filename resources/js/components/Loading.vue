@@ -11,7 +11,7 @@
       <div class="col-6 text-center">
         <h2 class="mb-3">Nos petits robots verts<br>inspectent votre site...</h2>
         <div class="progress-bar">
-          <div class="loaded" :style="'transform: scaleX(' + progress + '%)'"></div>
+          <div class="loaded"></div>
         </div>
       </div>
     </div>
@@ -58,7 +58,7 @@
 
   .loaded {
     height: 100%;
-    width: 100%;
+    width: 0;
     background: #4E483C;
     transform-origin: 0%;
     transition: all .5s ease;

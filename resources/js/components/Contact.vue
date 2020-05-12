@@ -22,31 +22,31 @@
 
 						<!-- URL -->
 						<div class="form-group">
-							<label for="url">URL</label>
-							<input type="url" class="form-control" v-model="mail.url" id="url" required>
+							<label for="company">Société</label>
+							<input type="company" class="form-control" v-model="mail.company" id="company">
 						</div>
 
 						<!-- EMAIL -->
 						<div class="form-group">
-							<label for="email">Email</label>
+							<label for="email">Email <sup>*</sup></label>
 							<input type="email" class="form-control" v-model="mail.email" id="email" required>
 						</div>
 
 						<!-- TEL -->
 						<div class="form-group">
-							<label for="tel">Téléphone</label>
+							<label for="tel">Téléphone <sup>*</sup></label>
 							<input type="tel" class="form-control" v-model="mail.tel" id="tel" required>
 						</div>
 
 						<!-- NOM -->
 						<div class="form-group">
-							<label for="name">Prénom, Nom</label>
+							<label for="name">Prénom, Nom <sup>*</sup></label>
 							<input type="text" class="form-control" v-model="mail.name" id="name" required>
 						</div>
 
 						<!-- MESSAGE -->
 						<div class="form-group">
-							<label for="message">Message</label>
+							<label for="message">Message <sup>*</sup></label>
 							<textarea class="form-control" v-model="mail.message" id="message" required></textarea>
 						</div>
 
@@ -57,6 +57,7 @@
 
 						<div v-else class="form-group">
 							<button class="btn btn-lg btn-submit" type="submit">Envoyer</button>
+							<small>les champs avec une <sup>*</sup> sont obligatoires.</small>
 						</div>
 
 
@@ -78,12 +79,10 @@
 
         name: 'contact',
 
-        props: ['url', 'email'],
-
         data: function () {
             return {
                 mail: {
-                	url: '',
+                	company: '',
                 	name: '',
                 	email: '',
                 	tel: '',

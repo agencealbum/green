@@ -15,7 +15,7 @@ class ContactController extends Controller
 	{
 
 		$validatedData = $request->validate([
-	        'url' => 'required|url',
+	        'company' => 'required|company',
 	        'email' => 'required|email:rfc,dns',
 		    'tel' => ['required'],
 		    'name' => ['required'],
@@ -23,7 +23,7 @@ class ContactController extends Controller
 		]);
 
 		$email = array(
-	        'url' => $request->get('url'),
+	        'company' => $request->get('company'),
 	        'email' => $request->get('email'),
 		    'tel' => $request->get('tel'),
 		    'name' => $request->get('name'),

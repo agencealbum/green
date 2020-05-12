@@ -4,7 +4,7 @@
 
       <scan-header :result="result" :total="total"></scan-header>
 
-      <transition name="slide-fade" mode="out-in">
+      <transition name="slide-fade" mode="in">
         <loading v-if="loading" :progress="progress"></loading>
       </transition>
 
@@ -191,6 +191,9 @@
                         vm.lastprogress = response.data;
                         vm.progress = response.data;
                       }
+                      $(".progress-bar .loaded").animate({
+                          width: vm.progress + "%"
+                      }, 50);
                   });
               }, 1000);
 

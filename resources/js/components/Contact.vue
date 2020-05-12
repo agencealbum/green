@@ -4,6 +4,10 @@
 
 		<div class="container faq">
 
+			<div class="close-more">
+				<router-link to="/" class="btn">×</router-link>
+			</div>
+
 			<div class="row mb-5">
 
 				<div class="col-md-12">

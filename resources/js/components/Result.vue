@@ -4,28 +4,28 @@
     <div class="results row mb-5">
 
       <div @click="showMore('hosting', $event)" class="hosting col-md-3 h-100 result result-1 justify-content-center align-self-center">
-        <img class="img-result" v-if="result.hosting > 50" src="/img/results/hosting-1.svg">
+        <img class="img-result" v-if="result.hosting > 70" src="/img/results/hosting-1.svg">
         <img class="img-result" v-else src="/img/results/hosting-0.svg">
         <h4>Hébergement</h4>
         <animated-number :formatValue="formatNumber" :value="result.hosting"></animated-number> %
       </div>
 
       <div @click="showMore('performances', $event)" class="performances col-md-3 h-100 result result-2 justify-content-center align-self-center">
-        <img class="img-result" v-if="result.performance > 50" src="/img/results/performances-1.svg">
+        <img class="img-result" v-if="result.performance > 70" src="/img/results/performances-1.svg">
         <img class="img-result" v-else src="/img/results/performances-0.svg">
         <h4>Performances</h4>
         <animated-number :formatValue="formatNumber" :value="result.performance"></animated-number> %
       </div>
 
       <div @click="showMore('usability', $event)" class="usability col-md-3 h-100 result result-3 justify-content-center align-self-center">
-        <img class="img-result" v-if="result.usability > 50" src="/img/results/adaptability-1.svg">
+        <img class="img-result" v-if="result.usability > 70" src="/img/results/adaptability-1.svg">
         <img class="img-result" v-else src="/img/results/adaptability-0.svg">
         <h4>Adaptabilité</h4>
         <animated-number :formatValue="formatNumber" :value="result.usability"></animated-number> %
       </div>
 
       <div @click="showMore('carbon', $event)" class="carbon col-md-3 h-100 result result-4 justify-content-center align-self-center">
-        <img class="img-result" v-if="result.carbon > 50" src="/img/results/carbon-1.svg">
+        <img class="img-result" v-if="result.carbon.g < 1" src="/img/results/carbon-1.svg">
         <img class="img-result" v-else src="/img/results/carbon-0.svg">
         <h4>Bilan carbone</h4>
         <!--<animated-number :formatValue="formatNumber" :value="result.carbon.percent"></animated-number> %<br>-->

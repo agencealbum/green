@@ -4,7 +4,9 @@
 
       <scan-header :result="result" :total="total"></scan-header>
 
-      <loading v-if="loading" :progress="progress"></loading>
+      <transition name="slide-fade" mode="out-in">
+        <loading v-if="loading" :progress="progress"></loading>
+      </transition>
 
       <template v-if="!loading">
 
@@ -63,7 +65,7 @@
 
         </section>
 
-        <transition name="fade" mode="out-in">
+        <transition name="slide-fade" mode="out-in">
           <result v-if="result" :result="result" v-on:show-more="more = $event"></result>
         </transition>
 

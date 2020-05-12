@@ -8,6 +8,8 @@ use GuzzleHttp\Client;
 use Goutte\Client as Goutte;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NouveauTest;
 
 class GreenController extends Controller
 {
@@ -174,6 +176,10 @@ class GreenController extends Controller
         $scan->total_score = $result['total'];
 
         $scan->save();
+
+		Notification::route('mail', ['album@agencealbum.com', 'maxime.massa@agencealbum.com'])
+					->notify(new NouveauTest($scan));
+
 	}
 
 

@@ -31,6 +31,7 @@
 
 			<h2>Bilan carbone</h2>
 			<p>Un site dégage du  carbone! Eloignement physique entre les serveurs et leurs utilisateurs –aie aie aie, mon site est en chine et mes utilisateurs principalement en France!-, poids des pages, temps de chargement,... et le carbone augmente, augmente. Pollue, pollue, pollue... Ca fait peur</p>
+			<p>Nous considérons qu'un site qui emet plus de 1g de C02 par visite est trop polluant par rapport à la moyenne.</p>
 
 		</div>
 

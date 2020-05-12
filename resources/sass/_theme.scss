@@ -53,8 +53,9 @@ div p:last-child {
 
 .close-more {
   position: absolute;
-  top: 10vh;
+  top: 8vh;
   right: 10vh;
+  z-index: 2;
 }
 .close-more > .btn {
   font-size: 2rem;

@@ -22,13 +22,13 @@
 					</div>
 					<div class="col-md-3 d-none d-md-block">
 						<div v-if="result.total >= 85" class="bubble">
-							<p>Bravo, votre site est quasiment au top !<br></p>
+							<p>Chapeau, le site est quasi au top! Quelques ajustements, et vous pourrez  faire les gros bras: l’ environnement et lui ne feront qu’un!</p>
 						</div>
 						<div v-if="result.total >= 65 && result.total < 85" class="bubble">
-							<p>C'est bien,<br>quelques améliorations permettraient à votre site d’être au top !</p>
+							<p>C’est pas mal du tout. On n’est pas loin. Une petite révision et il n’y paraitra plus!</p>
 						</div>
 						<div v-if="result.total < 65" class="bubble">
-							<p>Bof bof,<br>votre site peut être optimisé pour un meilleur résultat.</p>
+							<p>Bon, pas de quoi rouler les mécaniques: force est de constater que ce n’est pas terrible terrible...le site fait certainement son boulot mais il crache, tousse, traine des pieds, consomme pas mal, ... il pollue quoi !</p>
 						</div>
 					</div>
 

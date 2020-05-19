@@ -69,10 +69,10 @@ export default {
 					ctx = chart.chart.ctx;
 
 					ctx.restore();
-					var fontSize = (height / 114).toFixed(2);
+					var fontSize = (height / 80).toFixed(2);
 					ctx.font = fontSize + "em sans-serif";
 					ctx.textBaseline = "middle";
-					ctx.fillStyle = vm.color;
+					ctx.fillStyle = '#FFF'; //vm.color;
 
 					var text = val + "%",
 					textX = Math.round((width - ctx.measureText(text).width) / 2),

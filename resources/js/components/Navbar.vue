@@ -3,7 +3,7 @@
 		<div class="container">
 		    <div class="collapse navbar-collapse">
 		        <div class="navbar-nav mr-auto">
-		            <router-link to="/" class="nav-item nav-link"><img src="/img/logo.png" alt="Agence Album"></router-link>
+		            <a target="_blank" href="https://www.agencealbum.com/" class="nav-item nav-link"><img src="/img/logo.png" alt="Agence Album"></a>
 		        </div>
 		       	<router-link to="/contact" class="nav-item nav-link">Contact</router-link>
 		       	<!--<router-link to="/faq" class="nav-item nav-link">FAQ</router-link>-->

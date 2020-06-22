@@ -119,8 +119,8 @@ class GreenController extends Controller
 		// PAGESPEED
 		try {
 			$pagespeed = $this->pagespeed();
-			$performance = $pagespeed->getSpeedScore();
-			$usability = $pagespeed->getUsabilityScore();
+			$performance = $pagespeed['performance'];
+			$usability = $pagespeed['usability'];
 			$this->incrementProgess();
 		} catch (Exception $e) {
 			return response()->json(['error' => true]);
@@ -195,12 +195,30 @@ class GreenController extends Controller
 
 	public function pagespeed()
 	{
-
+/*
 		$key = env("GOOGLE_PAGESPEED_APP_KEY");
 		$caller = new \PhpInsights\InsightsCaller($key, 'fr');
 		$response = $caller->getResponse($this->url, \PhpInsights\InsightsCaller::STRATEGY_MOBILE);
 		$result = $response->getMappedResult();
 		return $result;
+*/
+
+
+        $key = env('GOOGLE_PAGESPEED_APP_KEY');
+        $website = $this->url;
+
+        $client = new \GuzzleHttp\Client();
+
+        $result = $client->request('GET', 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed?category=PERFORMANCE&category=ACCESSIBILITY&url=' .$website. '&key=' . $key);
+		$result = json_decode($result->getBody());
+
+		$performance = $result->lighthouseResult->categories->performance->score * 100;
+		$usability = $result->lighthouseResult->categories->accessibility->score * 100;
+
+		return array(
+			'performance' => $performance,
+			'usability' => $usability
+		);
 
 	}
 

@@ -4,9 +4,7 @@
 
       <scan-header :result="result" :total="total"></scan-header>
 
-      <transition name="slide-fade" mode="in">
-        <loading v-if="loading" :progress="progress"></loading>
-      </transition>
+      <loading v-if="loading" :progress="progress"></loading>
 
       <template v-if="!loading">
 

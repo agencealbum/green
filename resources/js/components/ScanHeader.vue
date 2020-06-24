@@ -48,7 +48,7 @@
 					<div class="col-md-6">
 						<h2>Un jour peut-être!</h2>
 						<p>Un jour peut-être, le World Wide Web fonctionnera entièrement à partir d'énergies renouvelables... C’est certainement à portée de main.</p>
-						<p>Pour votre site, c’est sûr, c’est à votre portée : est-il déjà au «vert»? Pour le savoir, Album a créé une application qui vous le dira. <strong>Allez, testez!</strong></p>
+						<p>Pour votre site, c’est sûr, c’est à votre portée : est-il déjà au « vert » ?<br>Pour le savoir,<br>Album a créé une application qui vous le dira.<br><strong>Allez, testez!</strong></p>
 					</div>
 
 				</div>

@@ -37,7 +37,7 @@ export default {
 	    }
 	},
 
-	mounted () {
+	mounted () { 
 
 		let chartData = {
 			labels: ['Résultat'],
@@ -86,5 +86,6 @@ export default {
 
 	}
 
-}
+};
+
 </script>

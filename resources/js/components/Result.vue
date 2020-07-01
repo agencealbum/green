@@ -25,7 +25,7 @@
       </div>
 
       <div @click="showMore('carbon', $event)" class="carbon col-md-3 h-100 result result-4 justify-content-center align-self-center">
-        <img class="img-result" v-if="result.carbon.g < 1" src="/img/results/carbon-1.svg">
+        <img class="img-result" v-if="result.carbon.g < 3" src="/img/results/carbon-1.svg">
         <img class="img-result" v-else src="/img/results/carbon-0.svg">
         <h4>Bilan carbone</h4>
         <!--<animated-number :formatValue="formatNumber" :value="result.carbon.percent"></animated-number> %<br>-->

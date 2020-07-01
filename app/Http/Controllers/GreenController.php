@@ -256,10 +256,13 @@ class GreenController extends Controller
 		$statusCode = $response->getStatusCode();
 		$carbon = json_decode($response->getBody(), true); // Carbon (gramme)
 
-		$percent = intval(round( ($carbon['c'] > 3) ? 0 : (100 - ($carbon['c']/3 * 100)), 0 )); // Convert to percent
+		//$c = round($carbon['c'] / 3, 2); // V2 of the api
+		$c = $carbon['c'];
+
+		$percent = intval(round( ($c > 3) ? 0 : (100 - ($c / 3 * 100)), 0 )); // Convert to percent
 
 		return array(
-			'g' => $carbon['c'],
+			'g' => $c,
 			'percent' => $percent
 		);
 

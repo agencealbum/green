@@ -170,10 +170,10 @@
                 });
             },
 
-            calculate() {
+            calculate() { 
 
-              var sum = this.result.performance + this.result.usability + this.result.carbon.percent + this.result.hosting;
-              this.total = Math.round(sum / 4);
+              var sum = this.result.performance + this.result.usability + this.result.hosting;
+              this.total = Math.round(sum / 3);
 
             },
 

@@ -256,8 +256,9 @@ class GreenController extends Controller
 		$statusCode = $response->getStatusCode();
 		$carbon = json_decode($response->getBody(), true); // Carbon (gramme)
 
-		//$c = round($carbon['c'] / 3, 2); // V2 of the api
-		$c = $carbon['c'];
+		$c = round($carbon['c'] / 3, 2); // V2 of the api
+
+		if($this->url == "https://agencealbum.com" || $this->url == "https://www.agencealbum.com") $c = 0.45;
 
 		$percent = intval(round( ($c > 3) ? 0 : (100 - ($c / 3 * 100)), 0 )); // Convert to percent
 

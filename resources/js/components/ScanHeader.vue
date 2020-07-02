@@ -3,7 +3,7 @@
 	<div class="header">
 
 
-		<div class="inner-header d-flex align-items-end mt-5">
+		<div class="inner-header d-flex align-items-end">
 		    
 			<!-- HEADER CONTENT -->
 
@@ -22,13 +22,13 @@
 					</div>
 					<div class="col-md-3 d-none d-md-block">
 						<div v-if="result.total >= 85" class="bubble">
-							<p>Chapeau, le site est quasi au top! Quelques ajustements, et vous pourrez  faire les gros bras: l’ environnement et lui ne feront qu’un!</p>
+							<p>Chapeau, le site est quasi au top ! Quelques ajustements, et vous pourrez  faire les gros bras : l’environnement et lui ne feront qu’un !</p>
 						</div>
 						<div v-if="result.total >= 65 && result.total < 85" class="bubble">
 							<p>C’est pas mal du tout. On n’est pas loin. Une petite révision et il n’y paraitra plus!</p>
 						</div>
 						<div v-if="result.total < 65" class="bubble">
-							<p>Bon, pas de quoi rouler les mécaniques: force est de constater que ce n’est pas terrible terrible...le site fait certainement son boulot mais il crache, tousse, traine des pieds, consomme pas mal, ... il pollue quoi !</p>
+							<p>Bon, pas de quoi rouler des mécaniques : force est de constater que ce n’est pas terrible terrible...le site fait certainement son boulot mais il crache, tousse, traîne des pieds, consomme pas mal... il pollue quoi !</p>
 						</div>
 					</div>
 
@@ -42,13 +42,13 @@
 				<div class="row d-flex align-content-center h-100">
 
 					<div class="col-md-6 mb-3">
-						<h1>Quel est l'impact de votre site sur la planète?</h1>
+						<h1>Quel est l'impact de votre site sur la planète ?</h1>
 					</div>
 
 					<div class="col-md-6">
-						<h2>Un jour peut-être!</h2>
+						<h2>Un jour peut-être !</h2>
 						<p>Un jour peut-être, le World Wide Web fonctionnera entièrement à partir d'énergies renouvelables... C’est certainement à portée de main.</p>
-						<p>Pour votre site, c’est sûr, c’est à votre portée : est-il déjà au « vert » ?<br>Pour le savoir,<br>Album a créé une application qui vous le dira.<br><strong>Allez, testez!</strong></p>
+						<p>Pour votre site, c’est sûr, c’est à votre portée : est-il déjà au « vert » ?<br>Pour le savoir,<br>Album a créé une application qui vous le dira.<br><strong>Allez, testez !</strong></p>
 					</div>
 
 				</div>
